@@ -21,6 +21,7 @@ services:
       dockerfile: Dockerfiles/SFTP.Dockerfile
     ports:
       - "10022:10022"
+    command: ["sh","./init.sh"]
     volumes:
       - ./key/id_rsa.pub:/home/test/.ssh/authorized_keys
       - ./cfg/sshd_config:/etc/ssh/sshd_config
