@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  cargoview_backend:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Backend.Dockerfile
+    volumes:
+      - ./main.py:/app/main.py
+      - ./modules:/app/modules
+      - ./requirements.txt:/app/requirements.txt
+    command: ["python3", "main.py"]
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sftp_server
+
+  sftp_server:
+    build:
+      context: .
+      dockerfile: Dockerfiles/SFTP.Dockerfile
+    ports:
+      - "10022:10022"
+    volumes:
+      - ./key/id_rsa.pub:/home/test/.ssh/authorized_keys
+      - ./cfg/sshd_config:/etc/ssh/sshd_config
+      - ./cfg/init.sh:/init.sh
+    tty: true
