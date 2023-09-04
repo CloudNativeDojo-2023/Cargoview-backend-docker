@@ -4,13 +4,10 @@ services:
   cargoview_backend:
     build:
       context: .
-      dockerfile: Dockerfiles/Backend.Dockerfile
+      dockerfile: backend/Dockerfile
     volumes:
-      - ./main.py:/app/main.py
-      - ./modules:/app/modules
-      - ./requirements.txt:/app/requirements.txt
-      - ./test:/app/test   # バインドマウントを追加
-    command: ["python3", "main.py"]
+      - ./upload/:/upload
+    command: ["python3", "-u" , "main.py"]
     ports:
       - "5000:5000"
     depends_on:
@@ -19,13 +16,10 @@ services:
   sftp_server:
     build:
       context: .
-      dockerfile: Dockerfiles/SFTP.Dockerfile
+      dockerfile: sftp-server/Dockerfile
     ports:
       - "10022:10022"
     command: ["sh", "./init.sh"]
     volumes:
-      - ./key/id_rsa.pub:/home/test/.ssh/authorized_keys
-      - ./cfg/sshd_config:/etc/ssh/sshd_config
-      - ./cfg/init.sh:/init.sh
-      - ./test:/app/test   # バインドマウントを追加
+      - ./upload/:/upload
     tty: true

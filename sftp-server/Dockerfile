@@ -16,24 +16,18 @@ RUN echo "test:test" | chpasswd
 # テスト用アカウントtestをsudoグループに追加
 RUN usermod -aG sudo test
 
-# 公開鍵認証のためのディレクトリを作成
-RUN mkdir -p /home/test/.ssh
-
-# 公開鍵をコピー
-COPY ./key/id_rsa.pub /home/test/.ssh/authorized_keys
-
 # テスト用アカウントtestのホームディレクトリの所有者をtestに変更
 RUN chown -R test:test /home/test
 
-# テスト用アカウントtestのホームディレクトリのパーミッションを変更
-RUN chmod 700 /home/test/.ssh && chmod 600 /home/test/.ssh/authorized_keys
-
 # SSHサーバーの設定ファイルをコピー
-COPY ./cfg/sshd_config /etc/ssh/sshd_config
+COPY ./sftp-server/cfg/sshd_config /etc/ssh/sshd_config
 
 # sshdサービス起動用のスクリプトをコピー
-COPY ./cfg/init.sh /init.sh
+COPY ./sftp-server/cfg/init.sh /init.sh
 RUN chmod +x /init.sh
-#テスト用に権限関係の問題を無視するための措置
-WORKDIR /app
-RUN chmod 777 /app /app/test
+
+RUN mkdir -p /upload
+
+RUN chown -R test:test /upload && chmod 777 /upload
+
+
