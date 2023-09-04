@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  cargoview_backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./upload/:/upload
+    command: ["python3", "-u" , "main.py"]
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sftp_server
+
+  sftp_server:
+    build:
+      context: .
+      dockerfile: sftp-server/Dockerfile
+    ports:
+      - "10022:10022"
+    command: ["sh", "./init.sh"]
+    volumes:
+      - ./upload/:/upload
+    tty: true
