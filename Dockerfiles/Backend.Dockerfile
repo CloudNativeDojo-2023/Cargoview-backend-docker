@@ -15,6 +15,6 @@ RUN pip install -r /app/requirements.txt
 RUN mkdir test
 #テスト用に権限関係の問題を無視するための措置
 RUN chmod 777 /app /app/test
-COPY main.py /app/main
-COPY modules/* ./modules
+COPY main.py /app/
+COPY modules/* /app/modules
 CMD ["python3", "main.py"]

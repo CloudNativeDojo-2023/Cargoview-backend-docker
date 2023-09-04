@@ -34,3 +34,6 @@ COPY ./cfg/sshd_config /etc/ssh/sshd_config
 # sshdサービス起動用のスクリプトをコピー
 COPY ./cfg/init.sh /init.sh
 RUN chmod +x /init.sh
+#テスト用に権限関係の問題を無視するための措置
+WORKDIR /app
+RUN chmod 777 /app /app/test

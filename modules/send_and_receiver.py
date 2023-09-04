@@ -58,7 +58,6 @@ CORS(app)
 
 msg = sse_message()
 file_manage = file_manager()
-
 # SSE送信
 @app.route("/get_task")
 def sse():

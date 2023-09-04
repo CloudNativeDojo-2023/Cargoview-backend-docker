@@ -9,6 +9,7 @@ services:
       - ./main.py:/app/main.py
       - ./modules:/app/modules
       - ./requirements.txt:/app/requirements.txt
+      - ./test:/app/test   # バインドマウントを追加
     command: ["python3", "main.py"]
     ports:
       - "5000:5000"
@@ -21,9 +22,10 @@ services:
       dockerfile: Dockerfiles/SFTP.Dockerfile
     ports:
       - "10022:10022"
-    command: ["sh","./init.sh"]
+    command: ["sh", "./init.sh"]
     volumes:
       - ./key/id_rsa.pub:/home/test/.ssh/authorized_keys
       - ./cfg/sshd_config:/etc/ssh/sshd_config
       - ./cfg/init.sh:/init.sh
+      - ./test:/app/test   # バインドマウントを追加
     tty: true

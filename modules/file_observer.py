@@ -5,8 +5,10 @@ from watchdog.events import FileSystemEventHandler
 import os
 import threading
 from modules.send_and_receiver import msg,file_manage
+import logging
 # ファイル監視開始関数(origin)
 def start_monitoring(path):
+    logging.basicConfig(filename='/tmp/module.log', level=logging.DEBUG)
     event_handler = FileHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
@@ -34,6 +36,7 @@ class FileHandler(FileSystemEventHandler):
         file_name = event.src_path.split("/")[-1]
         file_manage.change_state(file_name,"IN_PROGRESS")
         print(f"ファイルが送信開始されました: {event.src_path}")
+        logging.Logger.debug(f"ファイルが送信開始されました: {event.src_path}")
 
     def on_modified(self, event):
         if not event.is_directory:

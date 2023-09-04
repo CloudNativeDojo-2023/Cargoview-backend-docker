@@ -3,8 +3,9 @@ from modules.file_observer import start_monitoring
 from modules.send_and_receiver import app, msg
 import json
 import time
-
+import logging
 if __name__ == "__main__":
+    logging.basicConfig(filename='/tmp/main.log', level=logging.DEBUG)
     # Flaskアプリケーションを起動するスレッド
     app_thread = threading.Thread(target=app.run, kwargs={"host":'0.0.0.0',"port": 5000})
     app_thread.start()
