@@ -29,11 +29,3 @@ RUN chmod +x /init.sh
 RUN mkdir -p /upload
 
 RUN chown -R test:test /upload && chmod 777 /upload
-
-RUN mkdir -p /upload2
-
-RUN chown -R test:test /upload && chmod 777 /upload2
-
-RUN mkdir -p /upload3
-
-RUN chown -R test:test /upload && chmod 777 /upload3

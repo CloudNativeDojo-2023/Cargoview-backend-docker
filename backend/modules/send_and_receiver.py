@@ -50,7 +50,10 @@ class file_manager():
         for i in self.tasklist:
             if i["fileName"] == name:
                 i["status"] = state
-
+    def change_progress(self,name,value):
+        for i in self.tasklist:
+            if i["fileName"] == name:
+                i["progress"] = value
     def send_error(self, name):  # 該当するタスクのstatus変更　一定時間を超えてファイルサイズが変更されていない際やハートビートの失敗などでの変更を意図
         for i in self.tasklist:
             if i["fileName"] == name:
